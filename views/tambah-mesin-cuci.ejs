@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Mesin Cuci Baru - UKM Newci</title>
+    <link rel="stylesheet" href="css/tambah-pelanggan.css">
+</head>
+<body>
+    <header>
+        <h1>Tambah Mesin Cuci Baru</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Form Tambah Mesin Cuci Baru</h2>
+        <form id="tambah-mesin-cuci-form">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            <label for="merek">Merek:</label>
+            <input type="text" id="merek" name="merek" required>
+            <label for="kapasitas">Kapasitas:</label>
+            <input type="number" id="kapasitas" name="kapasitas" required>
+            <label for="tarif">Tarif (per 15 menit):</label>
+            <input type="number" id="tarif" name="tarif" required>
+            <button type="submit">Tambah</button>
+        </form>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

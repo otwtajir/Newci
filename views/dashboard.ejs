@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - UKM Newci</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard Admin</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Daftar Mesin Cuci</h2>
+        <table id="mesin-cuci-table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Merek</th>
+                    <th>Status</th>
+                    <th>Pemesan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lulu</td>
+                    <td>LG</td>
+                    <td><button class="status-btn" data-status="digunakan">Digunakan</button></td>
+                    <td><button class="info-btn">widodo</button></td>
+                </tr>
+                <tr>
+                    <td>Coco</td>
+                    <td>Samsung</td>
+                    <td><button class="status-btn" data-status="tersedia">Tersedia</button></td>
+                    <td><button class="info-btn">...</button></td>
+                </tr>
+                <tr>
+                    <td>Lupi</td>
+                    <td>Panasonic</td>
+                    <td><button class="status-btn" data-status="digunakan">Digunakan</button></td>
+                    <td><button class="info-btn">asep</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Pelanggan - UKM Newci</title>
+    <link rel="stylesheet" href="css/kelola-mesin-cuci.css">
+</head>
+<body>
+    <header>
+        <h1>Kelola Pelanggan</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Daftar Pelanggan</h2>
+        <button class="add-btn"><a href="tambah-pelanggan">Tambah Pelanggan</a></button>
+        <table id="pelanggan-table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>No HP</th>
+                    <th>Email</th>
+                    <th>Alamat</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>08123456789</td>
+                    <td>john@example.com</td>
+                    <td>Jl. Merdeka No. 1</td>
+                    <td>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>08987654321</td>
+                    <td>jane@example.com</td>
+                    <td>Jl. Proklamasi No. 2</td>
+                    <td>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+  
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Pendapatan - UKM Newci</title>
+    <link rel="stylesheet" href="css/laporan.css">
+    <link rel="stylesheet" href="css/tambah-pelanggan.css">
+</head>
+<body>
+    <header>
+        <h1>Laporan Pendapatan</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Pilih Rentang Tanggal</h2>
+        <form id="tanggal-form">
+            <label for="tanggal-mulai">Tanggal Mulai:</label>
+            <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
+            <label for="tanggal-selesai">Tanggal Selesai:</label>
+            <input type="date" id="tanggal-selesai" name="tanggal-selesai" required>
+            <button type="submit">Tampilkan Laporan</button>
+        </form>
+        <div id="laporan-container"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

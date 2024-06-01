@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Mesin Cuci - UKM Newci</title>
+    <link rel="stylesheet" href="css/kelola-mesin-cuci.css">
+</head>
+<body>
+    <header>
+        <h1>Kelola Mesin Cuci</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+        
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Daftar Mesin Cuci</h2>
+        <button class="add-btn"><a href="tambah-mesin-cuci">Tambah Mesin Cuci</a></button>
+        <table id="mesin-cuci-table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Merek</th>
+                    <th>Kapasitas</th>
+                    <th>Tarif</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lulu</td>
+                    <td>LG</td>
+                    <td>7 kg</td>
+                    <td>Rp 10.000</td>
+                    <td>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Coco</td>
+                    <td>Samsung</td>
+                    <td>8 kg</td>
+                    <td>Rp 12.000</td>
+                    <td>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lupi</td>
+                    <td>Panasonic</td>
+                    <td>6 kg</td>
+                    <td>Rp 11.000</td>
+                    <td>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Modal untuk tambah mesin cuci baru -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tambah Mesin Cuci Baru</h2>
+            <form id="add-mesin-form">
+                <label for="nama">Nama:</label>
+                <input type="text" id="nama" name="nama" required>
+                <label for="merek">Merek:</label>
+                <input type="text" id="merek" name="merek" required>
+                <label for="kapasitas">Kapasitas:</label>
+                <input type="text" id="kapasitas" name="kapasitas" required>
+                <label for="tarif">Tarif:</label>
+                <input type="text" id="tarif" name="tarif" required>
+                <button type="submit">Tambah</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
