@@ -60,7 +60,6 @@ pool.getConnection((err, connection) => {
     res.render("tambah-pelanggan");
   });
 
-
   app.get("/tambah-mesin-cuci", (req, res) => {
     res.render("tambah-mesin-cuci");
   });
@@ -69,6 +68,12 @@ pool.getConnection((err, connection) => {
     res.render("laporan");
   });
 
+  app.get("/edit-mesin-cuci", (req, res) => {
+    res.render("edit-mesin-cuci");
+  });
 
+  app.get("/edit-pelanggan", (req, res) => {
+    res.render("edit-pelanggan");
+  });
 
 
