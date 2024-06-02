@@ -30,27 +30,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Lulu</td>
-                    <td>LG</td>
-                    <td><button class="status-btn" data-status="digunakan">Digunakan</button></td>
-                    <td><button class="info-btn">widodo</button></td>
-                </tr>
-                <tr>
-                    <td>Coco</td>
-                    <td>Samsung</td>
-                    <td><button class="status-btn" data-status="tersedia">Tersedia</button></td>
-                    <td><button class="info-btn">...</button></td>
-                </tr>
-                <tr>
-                    <td>Lupi</td>
-                    <td>Panasonic</td>
-                    <td><button class="status-btn" data-status="digunakan">Digunakan</button></td>
-                    <td><button class="info-btn">asep</button></td>
-                </tr>
+                <% mesincuci.forEach(function(mesin) { %>
+                    <tr>
+                        <td><%= mesin.nama %></td>
+                        <td><%= mesin.merek %></td>
+                        <td>
+                            <button class="status-btn" data-id="<%= mesin.idM %>" data-status="<%= mesin.status %>" style="background-color: <%= mesin.status === 'Tersedia' ? '#4CAF50' : '#f44336' %>;">
+                                <%= mesin.status %>
+                            </button>
+                        </td>
+                        <td><button class="info-btn" data-customer="..."><a href="pemesan">...</a></button></td>
+                    </tr>
+                <% }); %>
             </tbody>
         </table>
     </main>
-    <script src="script.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -23,24 +23,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Lulu</td>
-                    <td>LG</td>
-                    <td>Rp 10.000</td>
-                    <td>7 kg</td>
-                </tr>
-                <tr>
-                    <td>Coco</td>
-                    <td>Samsung</td>
-                    <td>Rp 12.000</td>
-                    <td>8 kg</td>
-                </tr>
-                <tr>
-                    <td>Lupi</td>
-                    <td>Panasonic</td>
-                    <td>Rp 11.000</td>
-                    <td>6 kg</td>
-                </tr>
+                <% if (mesincuci.length > 0) { %>
+                    <% mesincuci.forEach(function(mesin) { %>
+                        <tr>
+                            <td><%= mesin.nama %></td>
+                            <td><%= mesin.merek %></td>
+                            <td>Rp <%= mesin.tarif %></td>
+                            <td><%= mesin.kapasitas %> kg</td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">Tidak ada mesin cuci yang tersedia saat ini.</td>
+                    </tr>
+                <% } %>
             </tbody>
         </table>
     </main>
