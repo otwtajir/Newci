@@ -73,7 +73,9 @@ app.get("/laporan", (req, res) => {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Internal Server Error");
         } else {
+            console.log(results)
             res.render("laporan", { transaksi: results });
+            
         }
     });
 });

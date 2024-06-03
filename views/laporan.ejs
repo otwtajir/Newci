@@ -43,8 +43,16 @@
             <tbody>
                 <% transaksi.forEach(transaksi => { %>
                     <tr>
-                        <td><%= transaksi.tglMulai %></td>
-                        <td><%= transaksi.tglSelesai %></td>
+                        <% if(transaksi.tglMulai){%>
+                            <td><%= transaksi.tglMulai.toString().substring(0,21) %></td>
+                        <%}else{%>
+                            <td><%= transaksi.tglMulai %></td>
+                        <%}%>
+                        <% if(transaksi.tglSelesai){%>
+                            <td><%= transaksi.tglSelesai.toString().substring(0,21) %></td>
+                        <%}else{%>
+                            <td><%= transaksi.tglSelesai %></td>
+                        <%}%>
                         <td><%= transaksi.durasi %></td>
                         <td><%= transaksi.statusPembayaran %></td>
                         <td><%= transaksi.biaya %></td>
