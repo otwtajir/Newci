@@ -1,54 +1,35 @@
+<!-- views/edit-pelanggan.ejs -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pelanggan - UKM Newci</title>
-    <link rel="stylesheet" href="css/tambah-pelanggan.css">
+    <link rel="stylesheet" href="css/kelola-mesin-cuci.css">
 </head>
 <body>
     <header>
-        <h1>Edit Pelanggan Baru</h1>
+        <h1>Edit Pelanggan</h1>
     </header>
     <div class="sidebar">
         <ul>
-            <li><a href="dashboard">Dashboard</a></li>
-            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
-            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
-            <li><a href="laporan">Laporan Pendapatan</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="/kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="/laporan">Laporan Pendapatan</a></li>
         </ul>
     </div>
     <main>
-        <h2>Form Edit Pelanggan</h2>
-        <form id="tambah-pelanggan-form">
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama" required>
-            <label for="nohp">No HP:</label>
-            <input type="text" id="nohp" name="nohp" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="alamat">Alamat:</label>
-            <input type="text" id="alamat" name="alamat" required>
-            <label for="kecamatan">Kecamatan:</label>
-            <select id="kecamatan" name="kecamatan" required>
-                <option value="">Pilih Kecamatan</option>
-                <option value="Kecamatan 1">Kecamatan 1</option>
-                <option value="Kecamatan 2">Kecamatan 2</option>
-                <option value="Kecamatan 3">Kecamatan 3</option>
-                <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
-            </select>
-            <label for="kelurahan">Kelurahan:</label>
-            <select id="kelurahan" name="kelurahan" required>
-                <option value="">Pilih Kelurahan</option>
-                <option value="Kelurahan 1">Kelurahan 1</option>
-                <option value="Kelurahan 2">Kelurahan 2</option>
-                <option value="Kelurahan 3">Kelurahan 3</option>
-                <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
-            </select>
-            <button type="submit">Edit</button>
+        <h2>Edit Data Pelanggan</h2>
+        <form action="/edit-pelanggan/<%= pelanggan.namaP %>" method="POST">
+            <label for="namaP">Nama</label>
+            <input type="text" id="namaP" name="namaP" value="<%= pelanggan.namaP %>" required><br><br>
+            <label for="noHP">No HP</label>
+            <input type="text" id="noHP" name="noHP" value="<%= pelanggan.noHP %>" required><br><br>
+            <label for="alamat">Alamat</label>
+            <input type="text" id="alamat" name="alamat" value="<%= pelanggan.alamat %>" required><br><br>
+            <button type="submit">Simpan Perubahan</button>
         </form>
     </main>
-    <script>
-    </script>
 </body>
 </html>
