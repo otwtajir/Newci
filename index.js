@@ -165,14 +165,37 @@ app.post('/edit-pelanggan/:namaP', (req, res) => {
 });
 
 app.delete('/hapus-pelanggan/:namaP', (req, res) => {
-    const pelangganId = req.params.namaP;
-    pool.query('DELETE FROM pengguna WHERE namaP = ?', [pelangganId], (err, result) => {
+    const namaP = req.params.namaP;
+  
+    pool.query('SELECT idP FROM pengguna WHERE namaP = ?', [namaP], (err, results) => {
+      if (err) {
+        console.error('Error finding data:', err.message);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+  
+      if (results.length === 0) {
+        res.status(404).send('Pelanggan not found');
+        return;
+      }
+  
+      const idP = results[0].idP;
+  
+      pool.query('DELETE FROM transaksi WHERE idP = ?', [idP], (err, result) => {
         if (err) {
-            console.error('Error deleting data:', err.message);
-            res.status(500).send('Pelanggan deleted successfully');
-        } else {
-            res.status(200).send('Pelanggan deleted successfully');
+          console.error('Error deleting related data:', err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
+  
+        pool.query('DELETE FROM pengguna WHERE idP = ?', [idP], (err, result) => {
+          if (err) {
+            console.error('Error deleting data:', err.message);
+            res.status(500).send('Internal Server Error');
+          } else {
+            res.status(200).send('Pelanggan deleted successfully');
+          }
+        });
+      });
     });
-});
-
+  });
