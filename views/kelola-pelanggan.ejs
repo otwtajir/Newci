@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Pelanggan - UKM Newci</title>
-    <link rel="stylesheet" href="css/kelola-mesin-cuci.css">
+    <link rel="stylesheet" href="css/kelola-pelanggan.css">
 </head>
 <body>
     <header>
@@ -37,8 +37,8 @@
                         <td><%= pelanggan.noHP %></td>
                         <td><%= pelanggan.alamat %></td>
                         <td>
-                            <a href="/edit-pelanggan/<%= pelanggan.namaP %>"><button>Edit</button></a>
-                            <button onclick="hapusPelanggan('<%= pelanggan.namaP %>')">Delete</button>
+                            <a class="edit-btn" href="/edit-pelanggan/<%= pelanggan.namaP %>"><button>Edit</button></a>
+                            <button class="delete-btn" onclick="hapusPelanggan('<%= pelanggan.namaP %>')">Delete</button>
                         </td>
                     </tr>
                 <% }) %>

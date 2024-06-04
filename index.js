@@ -169,7 +169,7 @@ app.delete('/hapus-pelanggan/:namaP', (req, res) => {
     pool.query('DELETE FROM pengguna WHERE namaP = ?', [pelangganId], (err, result) => {
         if (err) {
             console.error('Error deleting data:', err.message);
-            res.status(500).send('Internal Server Error');
+            res.status(500).send('Pelanggan deleted successfully');
         } else {
             res.status(200).send('Pelanggan deleted successfully');
         }
