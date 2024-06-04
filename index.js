@@ -50,7 +50,7 @@ app.get("/kelola-mesin-cuci", (req, res) => {
 });
 
 app.get("/kelola-pelanggan", (req, res) => {
-    pool.query("SELECT namaP, noHP, alamat FROM pelanggan", (err, results) => {
+    pool.query("SELECT namaP, noHP, alamat FROM pengguna", (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Internal Server Error");
@@ -132,7 +132,7 @@ app.post("/tambah-pelanggan", (req, res) => {
 
 app.get('/edit-pelanggan/:namaP', (req, res) => {
     const pelangganId = req.params.namaP;
-    pool.query('SELECT * FROM pelanggan WHERE namaP = ?', [pelangganId], (err, results) => {
+    pool.query('SELECT * FROM pengguna WHERE namaP = ?', [pelangganId], (err, results) => {
         if (err) {
             console.error('Error fetching data:', err.message);
             res.status(500).send('Internal Server Error');
@@ -151,7 +151,7 @@ app.post('/edit-pelanggan/:namaP', (req, res) => {
     const pelangganId = req.params.namaP;
     const { namaP, noHP, alamat } = req.body;
     pool.query(
-        'UPDATE pelanggan SET namaP = ?, noHP = ?, alamat = ? WHERE namaP = ?',
+        'UPDATE pengguna SET namaP = ?, noHP = ?, alamat = ? WHERE namaP = ?',
         [namaP, noHP, alamat, pelangganId],
         (err, result) => {
             if (err) {
@@ -166,7 +166,7 @@ app.post('/edit-pelanggan/:namaP', (req, res) => {
 
 app.delete('/hapus-pelanggan/:namaP', (req, res) => {
     const pelangganId = req.params.namaP;
-    pool.query('DELETE FROM pelanggan WHERE namaP = ?', [pelangganId], (err, result) => {
+    pool.query('DELETE FROM pengguna WHERE namaP = ?', [pelangganId], (err, result) => {
         if (err) {
             console.error('Error deleting data:', err.message);
             res.status(500).send('Internal Server Error');
