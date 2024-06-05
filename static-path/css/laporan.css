@@ -7,11 +7,21 @@
 
 #laporan-container {
     margin-top: 20px;
+    max-height: 1500px; /* Atur tinggi maksimum yang diinginkan */
+    overflow-y: scroll; /* Munculkan scroller vertikal jika perlu */
+}
+
+#laporan-table {
+    margin-top: 20px;
+    max-height: 10px; /* Atur tinggi maksimum yang diinginkan */
+    overflow-y:50px; /* Munculkan scroller vertikal jika perlu */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    max-height: 10px; /* Atur tinggi maksimum yang diinginkan */
+    overflow-y:5px; /* Munculkan scroller vertikal jika perlu */
 }
 
 table th, table td {

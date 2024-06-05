@@ -139,7 +139,15 @@ app.get('/edit-pelanggan/:namaP', (req, res) => {
             return;
         }
         if (results.length > 0) {
-            res.render('edit-pelanggan', { pelanggan: results[0] });
+            const pelanggan = results[0];
+            pool.query('SELECT * FROM kelurahan', (err, results) => {
+                if (err) {
+                    console.error('Error fetching kelurahan data:', err.message);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                res.render('edit-pelanggan', { pelanggan: pelanggan, kelurahan: results });
+            });
         } else {
             res.status(404).send('Pelanggan not found');
         }
@@ -149,10 +157,10 @@ app.get('/edit-pelanggan/:namaP', (req, res) => {
 // Route untuk proses update data pelanggan
 app.post('/edit-pelanggan/:namaP', (req, res) => {
     const pelangganId = req.params.namaP;
-    const { namaP, noHP, alamat } = req.body;
+    const { namaP, noHP, alamat, idKel } = req.body;
     pool.query(
-        'UPDATE pengguna SET namaP = ?, noHP = ?, alamat = ? WHERE namaP = ?',
-        [namaP, noHP, alamat, pelangganId],
+        'UPDATE pengguna SET namaP = ?, noHP = ?, alamat = ?, idKel = ? WHERE namaP = ?',
+        [namaP, noHP, alamat, idKel, pelangganId],
         (err, result) => {
             if (err) {
                 console.error('Error updating data:', err.message);
@@ -163,6 +171,7 @@ app.post('/edit-pelanggan/:namaP', (req, res) => {
         }
     );
 });
+
 
 app.delete('/hapus-pelanggan/:namaP', (req, res) => {
     const namaP = req.params.namaP;
@@ -194,6 +203,7 @@ app.delete('/hapus-pelanggan/:namaP', (req, res) => {
             res.status(500).send('Internal Server Error');
           } else {
             res.status(200).send('Pelanggan deleted successfully');
+            
           }
         });
       });
