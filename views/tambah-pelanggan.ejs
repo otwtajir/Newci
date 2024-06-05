@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Pelanggan Baru - UKM Newci</title>
+    <title>Tambah Pelanggan - UKM Newci</title>
     <link rel="stylesheet" href="css/tambah-pelanggan.css">
 </head>
 <body>
@@ -12,44 +12,43 @@
     </header>
     <div class="sidebar">
         <ul>
-            <li><a href="dashboard">Dashboard</a></li>
-            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
-            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
-        
-            <li><a href="laporan">Laporan Pendapatan</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="/kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="/laporan">Laporan Pendapatan</a></li>
         </ul>
     </div>
     <main>
-        <h2>Form Tambah Pelanggan Baru</h2>
-        <form id="tambah-pelanggan-form">
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama" required>
-            <label for="nohp">No HP:</label>
-            <input type="text" id="nohp" name="nohp" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+        <h2>Form Tambah Pelanggan</h2>
+        <form id="tambah-pelanggan-form" action="/tambah-pelanggan" method="POST">
+            <label for="namapelanggan">Nama:</label>
+            <input type="text" id="namapelanggan" name="namapelanggan" placeholder="Masukkan nama anda" required>
+            
+            <label for="nohp">Nomor HP:</label>
+            <input maxlength="8"type="text" id="nohp" name="nohp" placeholder="Masukkan nomor HP anda" required>
+
             <label for="alamat">Alamat:</label>
-            <input type="text" id="alamat" name="alamat" required>
-            <label for="kecamatan">Kecamatan:</label>
-            <select id="kecamatan" name="kecamatan" required>
-                <option value="">Pilih Kecamatan</option>
-                <option value="Kecamatan 1">Kecamatan 1</option>
-                <option value="Kecamatan 2">Kecamatan 2</option>
-                <option value="Kecamatan 3">Kecamatan 3</option>
-                <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
-            </select>
+            <input maxlength="255" type="text" id="alamat" name="alamat" placeholder="Masukkan alamat anda" required>
+
             <label for="kelurahan">Kelurahan:</label>
-            <select id="kelurahan" name="kelurahan" required>
-                <option value="">Pilih Kelurahan</option>
-                <option value="Kelurahan 1">Kelurahan 1</option>
-                <option value="Kelurahan 2">Kelurahan 2</option>
-                <option value="Kelurahan 3">Kelurahan 3</option>
-                <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
+            <select id="kelurahanId" name="kelurahanId" required>
+                <% kelurahan.forEach(k => { %>
+                    <option value="<%= k.idKel %>"><%= k.namaKel %></option>
+                <% }); %>
             </select>
+
             <button type="submit">Tambah</button>
         </form>
+
+        <% if (errorMsg) { %>
+            <p style="color: red;"><%= errorMsg %></p>
+        <% } %>
+        <% if (successMsg) { %>
+            <p style="color: green;"><%= successMsg %></p>
+        <% } %>
     </main>
     <script>
+    
     </script>
 </body>
 </html>

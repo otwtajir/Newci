@@ -12,6 +12,7 @@ const app = express();
 const publicPath = path.resolve("static-path");
 
 app.use(express.static(publicPath));
+app.use(bodyParser.urlencoded({ extended: true })); // Middleware untuk body-parser
 app.set("view engine", "ejs");
 
 app.use(bodyParser.json());
@@ -24,21 +25,20 @@ const pool = mysql.createPool({
     password: "",
     database: "newci2",
     host: "127.0.0.1",
-  });
+});
 
-  
 pool.getConnection((err, connection) => {
     if (err) {
-      console.error("Error connecting to database:", err.message);
+        console.error("Error connecting to database:", err.message);
     } else {
-      console.log("Connected to database");
-      connection.release();
+        console.log("Connected to database");
+        connection.release();
     }
-  });
+});
 
-  app.listen(port, () => {
+app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
-  });
+});
 
   app.get("/", (req, res) => {
     pool.query("SELECT * FROM mesincuci WHERE status = 'tersedia'", (err, results) => {
@@ -81,7 +81,7 @@ app.post("/login", (req, res) => {
 });
   app.get("/login", (req, res) => {
     res.render("login");
-  });
+});
 
   app.get("/dashboard", (req, res) => {
     pool.getConnection((err, connection) => {
@@ -419,17 +419,56 @@ app.post("/tambah-mesin-cuci", (req, res) => {
 //   });
 // });
 
-  app.get("/kelola-pelanggan", (req, res) => {
-    res.render("kelola-pelanggan");
-  });
+app.get("/kelola-pelanggan", (req, res) => {
+    pool.query("SELECT namaP, noHP, alamat FROM pengguna", (err, results) => {
+        if (err) {
+            console.error("Error fetching data:", err.message);
+            res.status(500).send("Internal Server Error");
+        } else {
+            res.render("kelola-pelanggan", { pelanggan: results });
+        }
+    });
+});
 
-  app.get("/tambah-pelanggan", (req, res) => {
-    res.render("tambah-pelanggan");
-  });
+app.get("/laporan", (req, res) => {
+    const { tanggalMulai, tanggalSelesai } = req.query;
+    let query = "SELECT tglMulai, tglSelesai, durasi, statusPembayaran, biaya FROM transaksi";
 
-  app.get("/tambah-mesin-cuci", (req, res) => {
+    if (tanggalMulai && tanggalSelesai) {
+        query += ` WHERE tglMulai >= '${tanggalMulai}' AND tglSelesai <= '${tanggalSelesai}'`;
+    }
+
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.error("Error fetching data:", err.message);
+            res.status(500).send("Internal Server Error");
+        } else {
+            console.log(results)
+            res.render("laporan", { transaksi: results });
+            
+        }
+    });
+});
+
+app.get("/tambah-mesin-cuci", (req, res) => {
     res.render("tambah-mesin-cuci");
+});
+
+
+app.get("/edit-mesin-cuci", (req, res) => {
+    res.render("edit-mesin-cuci");
+});
+
+app.get("/tambah-pelanggan", (req, res) => {
+  pool.query("SELECT idKel, namaKel FROM kelurahan", (err, results) => {
+      if (err) {
+          console.error("Error fetching data:", err.message);
+          res.status(500).send("Internal Server Error");
+      } else {
+          res.render("tambah-pelanggan", { kelurahan: results, errorMsg: null, successMsg: null });
+      }
   });
+});
 
   app.get("/pemesan", (req, res) => {
     const idM = req.query.idM;
@@ -492,9 +531,7 @@ app.post("/submit-pemesan", (req, res) => {
 });
 
 
-  app.get("/laporan", (req, res) => {
-    res.render("laporan");
-  });
+ 
 
 //   app.delete('/hapus-mesin-cuci/:nama', (req, res) => {
 //     const Id = req.params.nama;
@@ -580,3 +617,112 @@ app.post('/edit-mesin-cuci/:nama', (req, res) => {
       }
   );
 });
+
+app.post("/tambah-pelanggan", (req, res) => {
+    const { namapelanggan, nohp, alamat, kelurahanId } = req.body;
+    const insertPengguna = "INSERT INTO pengguna (namaP, noHP, alamat, idKel) VALUES (?, ?, ?, ?)";
+    const penggunaValues = [namapelanggan, nohp, alamat, kelurahanId];
+
+    pool.query(insertPengguna, penggunaValues, (insertError, insertResult) => {
+        if (insertError) {
+            console.log(insertError);
+            pool.query("SELECT idKel, namaKel FROM kelurahan", (err, results) => {
+                return res.render("tambah-pelanggan", {
+                    kelurahan: results,
+                    errorMsg: "Gagal menambah pelanggan. Mohon coba lagi nanti.",
+                    successMsg: null,
+                });
+            });
+        } else {
+            pool.query("SELECT idKel, namaKel FROM kelurahan", (err, results) => {
+                res.render("tambah-pelanggan", {
+                    kelurahan: results,
+                    errorMsg: null,
+                    successMsg: `Pelanggan berhasil ditambahkan`,
+                });
+            });
+        }
+    });
+});
+
+
+
+app.get('/edit-pelanggan/:namaP', (req, res) => {
+    const pelangganId = req.params.namaP;
+    pool.query('SELECT * FROM pengguna WHERE namaP = ?', [pelangganId], (err, results) => {
+        if (err) {
+            console.error('Error fetching data:', err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (results.length > 0) {
+            const pelanggan = results[0];
+            pool.query('SELECT * FROM kelurahan', (err, results) => {
+                if (err) {
+                    console.error('Error fetching kelurahan data:', err.message);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                res.render('edit-pelanggan', { pelanggan: pelanggan, kelurahan: results });
+            });
+        } else {
+            res.status(404).send('Pelanggan not found');
+        }
+    });
+});
+
+// Route untuk proses update data pelanggan
+app.post('/edit-pelanggan/:namaP', (req, res) => {
+    const pelangganId = req.params.namaP;
+    const { namaP, noHP, alamat, idKel } = req.body;
+    pool.query(
+        'UPDATE pengguna SET namaP = ?, noHP = ?, alamat = ?, idKel = ? WHERE namaP = ?',
+        [namaP, noHP, alamat, idKel, pelangganId],
+        (err, result) => {
+            if (err) {
+                console.error('Error updating data:', err.message);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            res.redirect('/kelola-pelanggan');
+        }
+    );
+});
+
+
+app.delete('/hapus-pelanggan/:namaP', (req, res) => {
+    const namaP = req.params.namaP;
+  
+    pool.query('SELECT idP FROM pengguna WHERE namaP = ?', [namaP], (err, results) => {
+      if (err) {
+        console.error('Error finding data:', err.message);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+  
+      if (results.length === 0) {
+        res.status(404).send('Pelanggan not found');
+        return;
+      }
+  
+      const idP = results[0].idP;
+  
+      pool.query('DELETE FROM transaksi WHERE idP = ?', [idP], (err, result) => {
+        if (err) {
+          console.error('Error deleting related data:', err.message);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
+  
+        pool.query('DELETE FROM pengguna WHERE idP = ?', [idP], (err, result) => {
+          if (err) {
+            console.error('Error deleting data:', err.message);
+            res.status(500).send('Internal Server Error');
+          } else {
+            res.status(200).send('Pelanggan deleted successfully');
+            
+          }
+        });
+      });
+    });
+  });

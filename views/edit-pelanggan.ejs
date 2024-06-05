@@ -1,0 +1,228 @@
+<!-- views/edit-pelanggan.ejs -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pelanggan - UKM Newci</title>
+    <link rel="stylesheet" href="css/edit-pelanggan.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 250px;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: calc(100% - 70px);
+            padding-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 20px;
+        }
+
+        li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        li a:hover {
+            background-color: #555;
+        }
+
+        main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            font-weight: 500;
+        }
+
+        .add-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        .edit-btn button, .delete-btn {
+            padding: 8px 16px;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-btn button {
+            background-color: #2196F3;
+        }
+
+        .edit-btn button:hover {
+            background-color: #2196F3;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+        }
+
+        .delete-btn:hover {
+            background-color: #e53935;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Edit Pelanggan</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="/kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="/laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Edit Data Pelanggan</h2>
+        <form action="/edit-pelanggan/<%= pelanggan.namaP %>" method="POST">
+            <label for="namaP">Nama:</label>
+            <input type="text" id="namaP" name="namaP" value="<%= pelanggan.namaP %>" required><br><br>
+            <label for="noHP">No HP:</label>
+            <input type="text" id="noHP" name="noHP" value="<%= pelanggan.noHP %>" required><br><br>
+            <label for="alamat">Alamat:</label>
+            <input type="text" id="alamat" name="alamat" value="<%= pelanggan.alamat %>" required><br><br>
+            <label for="idKel">Kelurahan:</label>
+            <select id="idKel" name="idKel" required>
+                <% kelurahan.forEach(kel => { %>
+                    <option value="<%= kel.idKel %>" <%= pelanggan.idKel === kel.idKel ? 'selected' : '' %>><%= kel.namaKel %></option>
+                <% }); %>
+            </select><br><br>
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </main>
+</body>
+</html>

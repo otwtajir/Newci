@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Pelanggan - UKM Newci</title>
-    <link rel="stylesheet" href="css/kelola-mesin-cuci.css">
+    <link rel="stylesheet" href="css/kelola-pelanggan.css">
 </head>
 <body>
     <header>
@@ -26,36 +26,48 @@
                 <tr>
                     <th>Nama</th>
                     <th>No HP</th>
-                    <th>Email</th>
                     <th>Alamat</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>John Doe</td>
-                    <td>08123456789</td>
-                    <td>john@example.com</td>
-                    <td>Jl. Merdeka No. 1</td>
-                    <td>
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>08987654321</td>
-                    <td>jane@example.com</td>
-                    <td>Jl. Proklamasi No. 2</td>
-                    <td>
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
-                    </td>
-                </tr>
+                <% pelanggan.forEach(pelanggan => { %>
+                    <tr>
+                        <td><%= pelanggan.namaP %></td>
+                        <td><%= pelanggan.noHP %></td>
+                        <td><%= pelanggan.alamat %></td>
+                        <td>
+                            <a class="edit-btn" href="/edit-pelanggan/<%= pelanggan.namaP %>"><button>Edit</button></a>
+                            <button class="delete-btn" onclick="hapusPelanggan('<%= pelanggan.namaP %>')">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
             </tbody>
         </table>
     </main>
-
-  
+    <script>
+        function hapusPelanggan(namaP) {
+            if (confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')) {
+                fetch(`/hapus-pelanggan/${namaP}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    document.getElementById(`pelanggan-${namaP}`).remove();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Berhasil menghapus pelanggan');
+                });
+            }
+        }
+        
+    </script>
 </body>
 </html>

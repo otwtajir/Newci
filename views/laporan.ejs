@@ -21,14 +21,45 @@
     </div>
     <main>
         <h2>Pilih Rentang Tanggal</h2>
-        <form id="tanggal-form">
+        <form id="tanggal-form" action="/laporan" method="get">
             <label for="tanggal-mulai">Tanggal Mulai:</label>
-            <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
+            <input type="date" id="tanggal-mulai" name="tanggalMulai" required>
             <label for="tanggal-selesai">Tanggal Selesai:</label>
-            <input type="date" id="tanggal-selesai" name="tanggal-selesai" required>
+            <input type="date" id="tanggal-selesai" name="tanggalSelesai" required>
             <button type="submit">Tampilkan Laporan</button>
         </form>
-        <div id="laporan-container"></div>
+        
+        <div id="laporan-container">
+        <table id="laporan-table">
+            <thead>
+                <tr>
+                    <th>Tanggal Mulai</th>
+                    <th>Tanggal Selesai</th>
+                    <th>durasi</th>
+                    <th>Status Pembayaran</th>
+                    <th>Biaya</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% transaksi.forEach(transaksi => { %>
+                    <tr>
+                        <% if(transaksi.tglMulai){%>
+                            <td><%= transaksi.tglMulai.toString().substring(0,21) %></td>
+                        <%}else{%>
+                            <td><%= transaksi.tglMulai %></td>
+                        <%}%>
+                        <% if(transaksi.tglSelesai){%>
+                            <td><%= transaksi.tglSelesai.toString().substring(0,21) %></td>
+                        <%}else{%>
+                            <td><%= transaksi.tglSelesai %></td>
+                        <%}%>
+                        <td><%= transaksi.durasi %></td>
+                        <td><%= transaksi.statusPembayaran %></td>
+                        <td><%= transaksi.biaya %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
     </main>
     <script src="script.js"></script>
 </body>
