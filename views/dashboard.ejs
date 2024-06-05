@@ -27,6 +27,8 @@
                     <th>Merek</th>
                     <th>Status</th>
                     <th>Pemesan</th>
+                    <th>Status Pembayaran</th>
+                    <th>Total Harga</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +41,19 @@
                                 <%= mesin.status %>
                             </button>
                         </td>
-                        <td><button class="info-btn" data-customer="..."><a href="pemesan">...</a></button></td>
+                        <td>
+                            <%= mesin.pemesan %>
+                            <button class="info-btn" data-id="<%= mesin.idM %>" 
+                                <%= (mesin.status === 'Tersedia' && mesin.statusPembayaran === 'Belum Lunas') ? 'disabled' : '' %>>Informasi Pemesan</button>
+                        </td>
+                        <td>
+                            <button class="payment-status-btn" data-id="<%= mesin.idM %>" data-statusP="<%= mesin.statusPembayaran %>" style="background-color: <%= mesin.statusPembayaran === 'Lunas' ? '#4CAF50' : '#f44336' %>;">
+                                <%= mesin.statusPembayaran %>
+                            </button>
+                        </td>
+                        <td class="total-harga-cell" <%= mesin.status === 'Tersedia' && mesin.statusPembayaran === 'Belum Lunas' ? '' : 'style="display:none;"' %> >
+                            <%= mesin.durasi %> x <%= mesin.tarif %> = <%= mesin.biaya %>
+                        </td>
                     </tr>
                 <% }); %>
             </tbody>

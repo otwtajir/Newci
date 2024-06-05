@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Mesin Cuci - UKM Newci</title>
+    <link rel="stylesheet" href="css/tambah-pelanggan.css">
+    <style>
+
+        /* Existing CSS here... */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.sidebar {
+    background-color: #333;
+    color: #fff;
+    width: 250px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    height: calc(100% - 70px);
+    padding-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px 20px;
+}
+
+li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+li a:hover {
+    background-color: #555;
+}
+
+main {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Tambahan CSS untuk membuat dropdown sejajar */
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group label,
+.form-group select {
+    width: 48%;
+}
+
+@media (max-width: 600px) {
+    .form-group label,
+    .form-group select {
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+<body>
+    <header>
+        <h1>Edit Mesin Cuci</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="kelola-mesin-cuci">Kelola Mesin Cuci</a></li>
+            <li><a href="kelola-pelanggan">Kelola Pelanggan</a></li>
+            <li><a href="laporan">Laporan Pendapatan</a></li>
+        </ul>
+    </div>
+    <main>
+        <h2>Edit Mesin Cuci</h2>
+        <!-- <form id="tambah-mesin-cuci-form" action="/tambah-mesin-cuci" method="POST"> -->
+        <form id="tambah-mesin-cuci-form"  action="/edit-mesin-cuci/<%= mesin.nama %>" method="POST">
+
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            <label for="merek">Merek:</label>
+            <input type="text" id="merek" name="merek" required>
+            <label for="kapasitas">Kapasitas:</label>
+            <input type="number" id="kapasitas" name="kapasitas" required>
+            <label for="tarif">Tarif (per 15 menit):</label>
+            <input type="number" id="tarif" name="tarif" required>
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </main>
+</body>
+</html>
