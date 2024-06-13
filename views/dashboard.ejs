@@ -28,7 +28,7 @@
                     <th>Status</th>
                     <th>Pemesan</th>
                     <th>Status Pembayaran</th>
-                    <th>Total Harga</th>
+                    <th>Total Harga </th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                             </button>
                         </td>
                         <td>
-                            <%= mesin.pemesan %>
+                            <div class = "pp"><%= mesin.pemesan %></div>
                             <button class="info-btn" data-id="<%= mesin.idM %>" 
                                 <%= (mesin.status === 'Tersedia' && mesin.statusPembayaran === 'Belum Lunas') ? 'disabled' : '' %>>Informasi Pemesan</button>
                         </td>
@@ -52,7 +52,7 @@
                             </button>
                         </td>
                         <td class="total-harga-cell" <%= mesin.status === 'Tersedia' && mesin.statusPembayaran === 'Belum Lunas' ? '' : 'style="display:none;"' %> >
-                            <%= mesin.durasi %> x <%= mesin.tarif %> = <%= mesin.biaya %>
+                         <%= mesin.biaya %> (<%= mesin.durasi * 15%> menit)
                         </td>
                     </tr>
                 <% }); %>

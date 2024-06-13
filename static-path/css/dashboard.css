@@ -108,6 +108,7 @@ th {
 .payment-status-btn[data-status="tersedia"] {
     background-color: #4CAF50;
     color: #fff;
+    
 }
 
 .payment-status-btn[data-status="digunakan"] {
@@ -115,7 +116,7 @@ th {
     color: #fff;
 }
 
-.info-btn {
-    
+.pp {
+  padding-right: 10 px;  
     
 }

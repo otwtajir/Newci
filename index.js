@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import mysql from "mysql";
 
 
-const port = 8043;
+const port = 8044;
 const app = express();
 
 const publicPath = path.resolve("static-path");
@@ -41,7 +41,7 @@ app.listen(port, () => {
 });
 
   app.get("/", (req, res) => {
-    pool.query("SELECT * FROM mesincuci WHERE status = 'tersedia'", (err, results) => {
+    pool.query("SELECT * FROM mesincuci join transaksi on mesincuci.idM = transaksi.idM WHERE status = 'tersedia' and statuspembayaran = 'Lunas'", (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Server error");
@@ -383,7 +383,7 @@ app.post("/update-payment-status", (req, res) => {
 
 
 app.get("/kelola-mesin-cuci", (req, res) => {
-  pool.query("SELECT * FROM mesincuci", (err, results) => {
+  pool.query("SELECT * FROM mesincuci where status = 'Tersedia'", (err, results) => {
       if (err) {
           console.error("Error fetching data:", err.message);
           res.status(500).send("Server error");
@@ -420,7 +420,7 @@ app.post("/tambah-mesin-cuci", (req, res) => {
 // });
 
 app.get("/kelola-pelanggan", (req, res) => {
-    pool.query("SELECT namaP, noHP, alamat FROM pengguna", (err, results) => {
+    pool.query("SELECT namaP, noHP, alamat FROM pengguna where email is null", (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Internal Server Error");
@@ -605,7 +605,7 @@ app.post('/edit-mesin-cuci/:nama', (req, res) => {
   const nama2 = req.params.nama;
   const { nama, merek, kapasitas, tarif } = req.body;
   pool.query(
-      'UPDATE mesincuci SET nama = ?, merek = ?, kapasitas = ?, tarif = ?, status = "Digunakan" WHERE nama = ?',
+      'UPDATE mesincuci SET nama = ?, merek = ?, kapasitas = ?, tarif = ?, status = "Tersedia" WHERE nama = ?',
       [nama, merek, kapasitas,tarif, nama2 ],
       (err, result) => {
           if (err) {

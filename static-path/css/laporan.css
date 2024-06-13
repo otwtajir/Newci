@@ -7,7 +7,7 @@
 
 #laporan-container {
     margin-top: 20px;
-    max-height: 1500px; /* Atur tinggi maksimum yang diinginkan */
+    max-height: 1000px; /* Atur tinggi maksimum yang diinginkan */
     overflow-y: scroll; /* Munculkan scroller vertikal jika perlu */
 }
 
