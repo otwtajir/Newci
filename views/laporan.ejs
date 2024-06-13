@@ -33,9 +33,11 @@
         <table id="laporan-table">
             <thead>
                 <tr>
+                    <th>Nama Mesin Cuci</th>
+                    <th>Nama Penyewa</th>
                     <th>Tanggal Mulai</th>
                     <th>Tanggal Selesai</th>
-                    <th>Durasi (15 Menit)</th>
+                    <th>Durasi (Menit)</th>
                     <th>Status Pembayaran</th>
                     <th>Biaya</th>
                 </tr>
@@ -43,6 +45,8 @@
             <tbody>
                 <% transaksi.forEach(transaksi => { %>
                     <tr>
+                        <td><%= transaksi.namaMesin %></td>
+                        <td><%= transaksi.namaPengguna %></td>
                         <% if(transaksi.tglMulai){%>
                             <td><%= transaksi.tglMulai.toString().substring(0,21) %></td>
                         <%}else{%>
@@ -53,7 +57,7 @@
                         <%}else{%>
                             <td><%= transaksi.tglSelesai %></td>
                         <%}%>
-                        <td><%= transaksi.durasi %></td>
+                        <td><%= transaksi.durasi * 15%></td>
                         <td><%= transaksi.statusPembayaran %></td>
                         <td><%= transaksi.biaya %></td>
                     </tr>

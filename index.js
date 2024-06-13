@@ -40,8 +40,24 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-  app.get("/", (req, res) => {
-    pool.query("SELECT * FROM mesincuci join transaksi on mesincuci.idM = transaksi.idM WHERE status = 'tersedia' and statuspembayaran = 'Lunas'", (err, results) => {
+app.get("/", (req, res) => {
+    const query = `
+        SELECT mc.* 
+        FROM mesincuci mc
+        LEFT JOIN (
+            SELECT t1.idM, t1.statusPembayaran 
+            FROM transaksi t1
+            JOIN (
+                SELECT idM, MAX(tglSelesai) AS MaxTglSelesai 
+                FROM transaksi 
+                GROUP BY idM
+            ) t2 ON t1.idM = t2.idM AND t1.tglSelesai = t2.MaxTglSelesai
+        ) AS last_trans ON mc.idM = last_trans.idM
+        WHERE mc.status = 'Tersedia'
+        AND (last_trans.statusPembayaran = 'Lunas' OR last_trans.statusPembayaran IS NULL)
+    `;
+
+    pool.query(query, (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Server error");
@@ -50,6 +66,7 @@ app.listen(port, () => {
         }
     });
 });
+
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -420,7 +437,16 @@ app.post("/tambah-mesin-cuci", (req, res) => {
 // });
 
 app.get("/kelola-pelanggan", (req, res) => {
-    pool.query("SELECT namaP, noHP, alamat FROM pengguna where email is null", (err, results) => {
+    const query = `
+        SELECT pengguna.namaP, pengguna.noHP, pengguna.alamat 
+        FROM pengguna
+        LEFT JOIN transaksi ON pengguna.idP = transaksi.idP
+        GROUP BY pengguna.idP
+        HAVING COUNT(transaksi.idTransaksi) = 0 
+           OR COUNT(CASE WHEN transaksi.statusPembayaran = 'Belum Lunas' THEN 1 END) = 0
+    `;
+
+    pool.query(query, (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Internal Server Error");
@@ -430,25 +456,38 @@ app.get("/kelola-pelanggan", (req, res) => {
     });
 });
 
+
 app.get("/laporan", (req, res) => {
     const { tanggalMulai, tanggalSelesai } = req.query;
-    let query = "SELECT tglMulai, tglSelesai, durasi, statusPembayaran, biaya FROM transaksi";
+    let query = `
+        SELECT transaksi.tglMulai, transaksi.tglSelesai, transaksi.durasi, transaksi.statusPembayaran, transaksi.biaya, mesincuci.nama AS namaMesin, pengguna.namaP AS namaPengguna 
+        FROM transaksi 
+        JOIN mesincuci ON transaksi.idM = mesincuci.idM 
+        JOIN pengguna ON transaksi.idP = pengguna.idP 
+        WHERE transaksi.statusPembayaran = 'Lunas'
+    `;
+    let queryParams = [];
 
     if (tanggalMulai && tanggalSelesai) {
-        query += ` WHERE tglMulai >= '${tanggalMulai}' AND tglSelesai <= '${tanggalSelesai}'`;
+        query += " AND transaksi.tglMulai BETWEEN ? AND ? AND transaksi.tglSelesai BETWEEN ? AND ?";
+        const tanggalSelesaiAkhir = `${tanggalSelesai} 23:59:59`;
+        queryParams.push(tanggalMulai, tanggalSelesaiAkhir, tanggalMulai, tanggalSelesaiAkhir);
     }
 
-    pool.query(query, (err, results) => {
+    pool.query(query, queryParams, (err, results) => {
         if (err) {
             console.error("Error fetching data:", err.message);
             res.status(500).send("Internal Server Error");
         } else {
-            console.log(results)
+            console.log(results);
             res.render("laporan", { transaksi: results });
-            
         }
     });
 });
+
+
+
+
 
 app.get("/tambah-mesin-cuci", (req, res) => {
     res.render("tambah-mesin-cuci");
